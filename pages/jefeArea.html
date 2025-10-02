@@ -1,11 +1,57 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Página Jefe de Área</title>
-</head>
-<body>
-  <div id="contenido"></div>
-  <script type="module" src="../dist/pages/jefeArea.js"></script>
-</body>
-</html>
+// src/jefeArea.ts
+import { empleados } from "./opciones";
+
+// Definimos el tipo de empleado
+type Empleado = {
+  id: number;
+  nombre: string;
+  cargo: string;
+  tarea?: string;
+  tareaCumplida?: boolean;
+};
+
+// Función para listar empleados
+function mostrarEmpleados(lista: Empleado[]): string {
+  if (lista.length === 0) return "<p>No hay empleados registrados</p>";
+  return `
+    <ul>
+      ${lista
+        .map(
+          (e) => `
+        <li>
+          <b>ID:</b> ${e.id} - <b>Nombre:</b> ${e.nombre} - 
+          <b>Cargo:</b> ${e.cargo} - 
+          <b>Tarea:</b> ${e.tarea ?? "Ninguna"} 
+        </li>`
+        )
+        .join("")}
+    </ul>
+  `;
+}
+
+// Función para verificar tarea
+function verificarTarea(id: number, lista: Empleado[]): string {
+  const empleado = lista.find((e) => e.id === id);
+  if (!empleado) return "Empleado no encontrado.";
+  if (!empleado.tarea) return `El empleado ${empleado.nombre} no tiene tarea asignada.`;
+  return empleado.tareaCumplida
+    ? `✅ El empleado ${empleado.nombre} ha cumplido la tarea: ${empleado.tarea}`
+    : `❌ El empleado ${empleado.nombre} NO ha cumplido la tarea: ${empleado.tarea}`;
+}
+
+// Conexión con el DOM
+document.addEventListener("DOMContentLoaded", () => {
+  const btnVerEmpleados = document.getElementById("verEmpleados")!;
+  const divLista = document.getElementById("listaEmpleados")!;
+  const btnVerificar = document.getElementById("verificarTarea")!;
+  const divResultado = document.getElementById("resultadoTarea")!;
+
+  btnVerEmpleados.addEventListener("click", () => {
+    divLista.innerHTML = mostrarEmpleados(empleados);
+  });
+
+  btnVerificar.addEventListener("click", () => {
+    const id = Number((document.getElementById("idEmpleado") as HTMLInputElement).value);
+    divResultado.innerHTML = verificarTarea(id, empleados);
+  });
+});
