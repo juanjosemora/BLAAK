@@ -1,20 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>B L A A K - Opciones Empleado</title>
+  <meta charset="UTF-8">
+  <title>Panel Jefe de Área</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>🟢 B L A A K</h1>
-  <p>Selecciona una opción:</p>
-  <button id="yaEmpleado">Ya eres empleado</button>
-  <button id="nuevoEmpleado">Nuevo empleado</button>
+  <h2>👔 Panel Jefe de Área</h2>
 
-  <!-- Aquí se cargará el formulario -->
-  <div id="resultado" style="margin-top:20px;"></div>
+  <section>
+    <h3>👥 Ver empleados a cargo</h3>
+    <button onclick="mostrarEmpleados()">Mostrar empleados</button>
+    <div id="listaEmpleados"></div>
+  </section>
 
-  <!-- IMPORTANTE: usar type="module" -->
-  <script type="module" src="./dist/opciones.js"></script>
+  <section>
+    <h3>📌 Repartir misión del Administrador</h3>
+    <button onclick="repartirMision()">Repartir misión</button>
+    <div id="mision"></div>
+  </section>
+
+  <section>
+    <h3>✅ Verificar tarea de empleado</h3>
+    <input type="text" id="idEmpleado" placeholder="Ingrese ID del empleado">
+    <button onclick="verificarTarea()">Verificar</button>
+    <div id="resultado"></div>
+  </section>
+
+  <p><a href="index.html">⬅️ Volver al inicio</a></p>
+
+  <!-- Aquí enlazas el script compilado desde TypeScript -->
+  <script src="jefeArea.js"></script>
 </body>
 </html>
